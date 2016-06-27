@@ -32,9 +32,12 @@ png(filename = "~/Pictures/population_circle.png",
 ggplot(ukraine)+
   geom_polygon(aes(long, lat, group = group), 
                color = "#3A3F4A", fill = "#EFF2F4", size = 0.1)+
-  geom_point(data = population[complete.cases(population),], 
+  geom_point(data = na.omit(population[population$type == "місто",]),
              aes(lon, lat, size = X2015, color = type), 
-             shape = 1, alpha = 0.75)+
+             shape = 1, alpha = 0.75, stroke = 1)+
+  geom_point(data = na.omit(population[population$type=="смт",]), 
+             aes(lon, lat, size = X2015, color = type), 
+             shape = 1, alpha = 0.75, stroke = 0.45)+
   scale_color_manual(name = "Тип:", values = c("місто" = "#007685", "смт" = "#91074C"))+
   scale_size(name = "Чисельність:",
              range = c(0.05, 20), 
